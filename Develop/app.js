@@ -22,7 +22,7 @@ function appLaunch() {
         inquirer.prompt([
             {
                 type: "input",
-                name: "managerrName",
+                name: "managerName",
                 Message: "What is name of the manager on this team?",
                 validate: answer => {
 
@@ -74,7 +74,7 @@ function appLaunch() {
             },
             {
                 type: "input",
-                name: "managerOfficeNum",
+                name: "managerOfficeNumber",
                 Message: "Please provide the manager's office number.",
                 validate: answer => {
 
@@ -82,6 +82,7 @@ function appLaunch() {
                     const pass = answer.match(
                         /^[1-9]\d*$/
                     );
+
                     if (pass) {
                         return true;
                     }
@@ -94,7 +95,7 @@ function appLaunch() {
         ]).then(data => {
 
             // construct Manager object
-            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail)
+            const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber)
 
             // output data
             teamMembers.puch(manager);
