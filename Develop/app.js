@@ -33,12 +33,14 @@ const idArray = []
         // above) and pass in an array containing all employee objects; the `render` function will
         // generate and return a block of HTML including templated divs for each employee!
 
-    // printTeam
         // After you have your html, you're now ready to create an HTML file using the HTML
         // returned from the `render` function. Now write it to a file named `team.html` in the
         // `output` folder. You can use the variable `outputPath` above target this location.
         // Hint: you may need to check if the `output` folder exists and create it if it
         // does not.
+
+    // function call to start prompt process
+    // renderManager ()
 
 // function call
 // appLaunch();
