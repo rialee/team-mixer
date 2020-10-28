@@ -18,7 +18,7 @@ const idArray = []
 function appLaunch() {
 
     // renderManager -- use inquirer 
-    function renderManager() {
+    function createManager() {
         inquirer.prompt([
             {
                 type: "input",
@@ -58,7 +58,7 @@ function appLaunch() {
             },
             {
                 type: "input",
-                name: "engineerEmail",
+                name: "managerEmail",
                 Message: "What is the manager's email address?",
                 validate: answer => {
 
@@ -98,7 +98,7 @@ function appLaunch() {
             const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber)
 
             // output data
-            teamMembers.puch(manager);
+            teamMembers.push(manager);
             idArray.push(data.managerId);
             createTeam();
         });
@@ -110,19 +110,19 @@ function appLaunch() {
             {
                 type: "list",
                 name: "roleTypes",
-                messages: "which type of team member would you like to add to your team?",
-                choices: ["Engineer", "Inten", "My team is full"]
+                message: "Which type of team member would you like to add to your team?",
+                choices: ["Engineer", "Intern", "My team is full"]
             },
 
             // then call function according to choice of role
         ]).then(roleChoice => {
             switch (roleChoice.roleTypes) {
                 case "Engineer":
-                    renderEngineer();
+                    addEngineer();
                     break;
 
                 case "Intern":
-                    renderIntern();
+                    addIntern();
                     break;
 
                 default:
@@ -133,7 +133,7 @@ function appLaunch() {
     }
 
     // renderEngineer -- use inquirer 
-    function renderEngineer() {
+    function addEngineer() {
         // prompt questions 
         inquirer.prompt([
             {
@@ -207,20 +207,20 @@ function appLaunch() {
         ]).then(data => {
 
             // construct Engineer object
-            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerGithub)
+            const engineer = new Engineer(data.engineerName, data.engineerId,  data.engineerEmail, data.engineerGithub)
 
             // output data
             teamMembers.push(engineer);
             idArray.push(data.engineerId)
 
-            renderTeam();
+            createTeam();
         })
 
 
     }
 
     // renderIntern -- use inquirer 
-    function renderIntern() {
+    function addIntern() {
         inquirer.prompt([
             {
                 type: "input",
@@ -311,7 +311,7 @@ function appLaunch() {
     }
 
     // function call to start prompt process
-    renderManager();
+    createManager();
 }
 // function call
 appLaunch();
