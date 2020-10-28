@@ -1,1 +1,14 @@
-// TODO: Write code to define and export the Manager class. HINT: This class should inherit from Employee.
+// require the Employee class 
+const Employee = require("./Employee");
+
+// set up manager class blueprint -- extends Employee
+
+    // constructor function + officeNum
+        // super ref
+
+    // getRole function to prototype
+
+    // getOfficeNum function to prototype
+
+
+// export

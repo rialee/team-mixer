@@ -1,1 +1,14 @@
-// TODO: Write code to define and export the Intern class.  HINT: This class should inherit from Employee.
+// require the Employee class 
+const Employee = require("./Employee");
+
+// set up intern class blueprint -- extends Employee
+
+    // constructor function + school
+        // super ref
+
+    // getRole function to prototype
+
+    // getSchool function to prototype
+
+
+// export
