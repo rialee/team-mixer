@@ -1,14 +1,23 @@
-// require the Employee class 
 const Employee = require("./Employee");
 
 // set up intern class blueprint -- extends Employee
+class Intern extends Employee {
 
-    // constructor function + school
-        // super ref
+    // constructor function base class + school
+    constructor(name, id, email, school) {
+        super (name, id, email);
+        this.school = school;
+    };
+        
+    // prototype methods
+    getRole() {
+        return "Intern";
+    }
 
-    // getRole function to prototype
-
-    // getSchool function to prototype
-
+    getSchool() {
+        return this.school;
+    }
+}
 
 // export
+module.exports = Intern;

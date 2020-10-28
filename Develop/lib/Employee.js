@@ -1,23 +1,34 @@
-// set up base class
-
-// set up class blueprint 
+class Employee {
 
     // constructor function with fields (name, id, email)
+    constructor (name, id, email) {
         // name
+        this.name = name;
         // id
+        this.id = id;
         // email
-
+        this.email = email;
+    }
 
     // prototype methods
+    getName() { 
+        return this.name;
+    }
+    
+    getId() { 
+        return this.id;
+    }
 
-    // getName methodpwd
+    getEmail() {
+        return this.email;
+    }
 
-    // getId method
+    getRole() {
+        return "Employee";
+    }
 
-    // getEmail method
-
-    // getRole method
-
+}
+  
 
 // export 
-
+module.exports = Employee;

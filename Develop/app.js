@@ -19,6 +19,8 @@ const idArray = []
     // and to create objects for each team member (using the correct classes as blueprints!)
 
     // renderManager -- use inquirer 
+    
+
 
     // createTeam -- use inquirer 
 
@@ -27,6 +29,7 @@ const idArray = []
 
 
     // renderIntern -- use inquirer 
+
 
     // renderTeam function  
         // After the user has input all employees desired, call the `render` function (required
