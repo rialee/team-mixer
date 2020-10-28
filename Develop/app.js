@@ -10,40 +10,307 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+// declare empty team containers
 const teamMembers = []
 const idArray = []
 
-
-// function appLaunch
-    // Write code to use inquirer to gather information about the development team members,
-    // and to create objects for each team member (using the correct classes as blueprints!)
+// app launch -- start of operation
+function appLaunch() {
 
     // renderManager -- use inquirer 
-    
+    function renderManager() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "managerrName",
+                Message: "What is name of the manager on this team?",
+                validate: answer => {
 
+                    // check not empty 
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter at least one character.";
+                }
+            },
+            {
+                type: "input",
+                name: "managerId",
+                Message: "What is the manager's ID number?",
+                validate: answer => {
+
+                    // check for valid characters
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                    );
+                    if (pass) {
+
+                        // check for repeat ids
+                        if (idArray.includes(answer)) {
+                            return "This ID is taken. Please enter a different ID."
+                        }
+                        else {
+                            return true;
+                        }
+                    }
+                    return ("please enter a valid characters (1-9, A-Z)");
+                }
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                Message: "What is the manager's email address?",
+                validate: answer => {
+
+                    // check if it is a valid email address
+                    const pass = answer.match(
+                        /\S+@\S+\.\S+/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return ("Please enter a valid email address.");
+                }
+            },
+            {
+                type: "input",
+                name: "managerOfficeNum",
+                Message: "Please provide the manager's office number.",
+                validate: answer => {
+
+                    // check for valid characters
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return "Please insert a valid number.";
+                }
+
+            },
+
+
+        ]).then(data => {
+
+            // construct Manager object
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail)
+
+            // output data
+            teamMembers.puch(manager);
+            idArray.push(data.managerId);
+            createTeam();
+        });
+    }
 
     // createTeam -- use inquirer 
+    function createTeam() {
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "roleTypes",
+                messages: "which type of team member would you like to add to your team?",
+                choices: ["Engineer", "Inten", "My team is full"]
+            },
 
+            // then call function according to choice of role
+        ]).then(roleChoice => {
+            switch (roleChoice.roleTypes) {
+                case "Engineer":
+                    renderEngineer();
+                    break;
+
+                case "Intern":
+                    renderIntern();
+                    break;
+
+                default:
+                    renderTeam();
+            }
+        });
+
+    }
 
     // renderEngineer -- use inquirer 
+    function renderEngineer() {
+        // prompt questions 
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "engineerName",
+                Message: "What is the name of the engineer joining your team?",
+                validate: answer => {
 
+                    // check not empty 
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter at least one character.";
+                }
+            },
+            {
+                type: "input",
+                name: "engineerId",
+                Message: "What is the ID of the engineer you are adding?",
+                validate: answer => {
+
+                    // check for valid characters
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                    );
+                    if (pass) {
+
+                        // check for repeat ids
+                        if (idArray.includes(answer)) {
+                            return "This ID is taken. Please enter a different ID."
+                        }
+                        else {
+                            return true;
+                        }
+                    }
+                    return ("please enter a valid characters (1-9, A-Z)");
+                }
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                Message: "What is the engineer's email address?",
+                validate: answer => {
+
+                    // check if it is a valid email address
+                    const pass = answer.match(
+                        /\S+@\S+\.\S+/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return ("Please enter a valid email address.");
+                }
+            },
+            {
+                type: "input",
+                name: "engineerGithub",
+                Message: "Please provide the engineer's username.",
+                validate: answer => {
+
+                    // check not empty 
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please insert a valid username.";
+                }
+            },
+
+
+
+        ]).then(data => {
+
+            // construct Engineer object
+            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerGithub)
+
+            // output data
+            teamMembers.push(engineer);
+            idArray.push(data.engineerId)
+
+            renderTeam();
+        })
+
+
+    }
 
     // renderIntern -- use inquirer 
+    function renderIntern() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "internName",
+                Message: "What is the name of the intern joining your team?",
+                validate: answer => {
 
+                    // check not empty 
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter at least one character.";
+                }
+            },
+            {
+                type: "input",
+                name: "internId",
+                Message: "What is the ID of the intern you are adding?",
+                validate: answer => {
 
-    // renderTeam function  
-        // After the user has input all employees desired, call the `render` function (required
-        // above) and pass in an array containing all employee objects; the `render` function will
-        // generate and return a block of HTML including templated divs for each employee!
+                    // check for valid characters
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                    );
+                    if (pass) {
 
-        // After you have your html, you're now ready to create an HTML file using the HTML
-        // returned from the `render` function. Now write it to a file named `team.html` in the
-        // `output` folder. You can use the variable `outputPath` above target this location.
-        // Hint: you may need to check if the `output` folder exists and create it if it
-        // does not.
+                        // check for repeat ids
+                        if (idArray.includes(answer)) {
+                            return "This ID is taken. Please enter a different ID."
+                        }
+                        else {
+                            return true;
+                        }
+                    }
+                    return ("please enter a valid characters (1-9, A-Z)");
+                }
+            },
+            {
+                type: "input",
+                name: "internEmail",
+                Message: "What is the intern's email address?",
+                validate: answer => {
+
+                    // check if it is a valid email address
+                    const pass = answer.match(
+                        /\S+@\S+\.\S+/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return ("Please enter a valid email address.");
+                }
+            },
+            {
+                type: "input",
+                name: "internSchool",
+                Message: "Please provide the intern's school name.",
+                validate: answer => {
+
+                    // check not empty 
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please insert valid characters.";
+                }
+            },
+
+        ]).then(data => {
+            // construct intern object
+            const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+
+            // output data
+            teamMembers.push(intern);
+            idArray.push(data.internId);
+            createTeam();
+        })
+
+    }
+
+    // renderTeam -- write file and output to HTML
+    function renderTeam() {
+
+        // make folder if doesn't exist yet
+        if (!fs.existsSync(OUTPUT_DIR)) { fs.mkdirSync(OUTPUT_DIR) }
+
+        // output text to path
+        fs.writeFileSync(outputPath, render(teamMembers), "utf8");
+    }
 
     // function call to start prompt process
-    // renderManager ()
-
+    renderManager();
+}
 // function call
-// appLaunch();
+appLaunch();
